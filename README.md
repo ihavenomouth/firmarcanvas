@@ -1,6 +1,9 @@
 # firmarcanvas
 Prueba de concepto para gestionar un campo en el que se pueda firmar con el ratón o dedo.
 
+![Captura de pantalla](./screenshot.png)
+
+
 ## Uso
 
 Añade un elemento `<canvas>` a tu HTML, indicando el ancho y el alto.

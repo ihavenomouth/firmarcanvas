@@ -12,8 +12,8 @@ const calcularPosiciónDelEventoEnElCanvas = (e, canvas) => {
 
   //Posición  del canvas donde se ha producido el evento:
   return {
-    x: e.clientX - posiciónCanvas.left,
-    y: e.clientY - posiciónCanvas.top
+    x: e.clientX - posiciónCanvas.x,
+    y: e.clientY - posiciónCanvas.y
   }
 
 }
@@ -134,7 +134,10 @@ const firma = (canvas) => {
 }
 
 
-
+/**
+ * Borra el condenido del elemento canvas
+ * @param {HTMLCanvasElement} canvas 
+ */
 const borrarFirma = (canvas) => {
   const ctx = canvas.getContext("2d");
   ctx.reset();
