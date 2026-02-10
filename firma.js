@@ -8,15 +8,12 @@
  */
 const calcularPosiciónDelEventoEnElCanvas = (e, canvas) => {
   // Posición del canvas dentro de la web
-  const posiciónCanvas = {
-    x: canvas.getBoundingClientRect().left,
-    y: canvas.getBoundingClientRect().top
-  };
+  const posiciónCanvas = canvas.getBoundingClientRect();
 
   //Posición  del canvas donde se ha producido el evento:
   return {
-    x: e.clientX - posiciónCanvas.x,
-    y: e.clientY - posiciónCanvas.y
+    x: e.clientX - posiciónCanvas.left,
+    y: e.clientY - posiciónCanvas.top
   }
 
 }
@@ -90,7 +87,6 @@ const firma = (canvas) => {
   canvas.addEventListener("mouseleave", e => {
     //si salimos del canvas se dibuja lo que haya pendiente y se
     //marca que ya no estamos dibujando 
-    ctx.stroke(); // Render the path
     dibujando = false;
   });
 
