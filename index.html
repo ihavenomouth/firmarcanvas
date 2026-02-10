@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+  <script src="code.js" type="module"></script>
+  <style>
+    canvas{
+      background-color: white;
+      outline: 5px solid black;
+    }
+
+    #resultado pre:empty{
+      display: none;
+    }
+
+    div#resultado img:empty{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Firmar</h1>
+  <main>
+    <canvas id="canvasFirma" width="320" height="200"></canvas>
+    <br>
+    <button type="button" id="btnFirmar">Firmar</button>
+    <button type="button" id="btnBorrar">Borrar</button>
+  </main>
+
+  <article id="resultado">
+    <pre id="datosEnBase64ParaEnviarAlServidor"></pre>
+    <img id="imagenRecuperadaDelServidor" src="">
+  </article>
+
+  
+</body>
+</html>
