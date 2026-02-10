@@ -2,14 +2,15 @@
 /**
  * Función auxiliar que sirve para saber la posición dentro del canvas en la que se produjo un evento
  * de ratón (mouseenter, mouseleave, mouseup...)
- * @param {MouseEvent} e 
+ * @param {MouseEvent|Touch} e 
+ * @param {HTMLCanvasElement} canvas
  * @returns Object - Objeto {x,y} con la posición dentro del canvas 
  */
-const calcularPosiciónDelEventoEnElCanvas = (e,canvas) => {
+const calcularPosiciónDelEventoEnElCanvas = (e, canvas) => {
   // Posición del canvas dentro de la web
   const posiciónCanvas = {
-    x: canvas.getBoundingClientRect().x,
-    y: canvas.getBoundingClientRect().y
+    x: canvas.getBoundingClientRect().left,
+    y: canvas.getBoundingClientRect().top
   };
 
   //Posición  del canvas donde se ha producido el evento:
@@ -22,11 +23,12 @@ const calcularPosiciónDelEventoEnElCanvas = (e,canvas) => {
 
 
 
-const característicasDeLaLínea = (ctx) =>{
+const característicasDeLaLínea = (ctx) => {
   // Características de la línea
   ctx.lineWidth = 2;
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
+  ctx.strokeStyle = "black";
 }
 
 
@@ -51,9 +53,10 @@ const firma = (canvas) => {
 
   canvas.addEventListener("mousedown", e => {
     //Posición dentro del canvas donde se ha hecho click:
-    const puntoInicio = calcularPosiciónDelEventoEnElCanvas(e,canvas);
+    const puntoInicio = calcularPosiciónDelEventoEnElCanvas(e, canvas);
 
     //Movemos el bolígrafo a la posición inicial y marcamos que se está dibujando
+    ctx.beginPath();
     ctx.moveTo(puntoInicio.x, puntoInicio.y);
     dibujando = true;
   });
@@ -64,7 +67,7 @@ const firma = (canvas) => {
 
   canvas.addEventListener("mousemove", e => {
     //Posición dentro del canvas donde se ha movido:
-    const puntoFinal = calcularPosiciónDelEventoEnElCanvas(e,canvas);
+    const puntoFinal = calcularPosiciónDelEventoEnElCanvas(e, canvas);
 
     //Dibujamos una línea desde el punto al que se estaba hasta la posición actual
     if (dibujando) {
@@ -77,9 +80,8 @@ const firma = (canvas) => {
 
 
   canvas.addEventListener("mouseup", e => {
-    //si dejamos de pulsar el botón se dibuja lo que haya pendiente y se
+    //si dejamos de pulsar el botón se 
     //marca que ya no estamos dibujando 
-    ctx.stroke(); // Render the path
     dibujando = false;
   });
 
@@ -100,12 +102,12 @@ const firma = (canvas) => {
 
   canvas.addEventListener("touchstart", e => {
     e.preventDefault();
-    // console.log( e.touches[0] );
 
     //Posición dentro del canvas donde se ha hecho click:
-    const puntoInicio = calcularPosiciónDelEventoEnElCanvas(e.touches[0],canvas);
+    const puntoInicio = calcularPosiciónDelEventoEnElCanvas(e.touches[0], canvas);
 
     //Movemos el bolígrafo a la posición inicial y marcamos que se está dibujando
+    ctx.beginPath();
     ctx.moveTo(puntoInicio.x, puntoInicio.y);
     dibujando = true;
   });
@@ -114,11 +116,11 @@ const firma = (canvas) => {
   canvas.addEventListener("touchmove", e => {
     e.preventDefault();
 
-    //Posición dentro del canvas donde se ha movido:
-    const puntoFinal = calcularPosiciónDelEventoEnElCanvas(e.touches[0],canvas);
-
+    
     //Dibujamos una línea desde el punto al que se estaba hasta la posición actual
     if (dibujando) {
+      //Posición dentro del canvas donde se ha movido:
+      const puntoFinal = calcularPosiciónDelEventoEnElCanvas(e.touches[0], canvas);
       ctx.lineTo(puntoFinal.x, puntoFinal.y);
       ctx.stroke();
     }
@@ -128,9 +130,8 @@ const firma = (canvas) => {
 
 
   canvas.addEventListener("touchend", e => {
-    //si dejamos de pulsar el botón se dibuja lo que haya pendiente y se
+    //si dejamos de hacer touch se
     //marca que ya no estamos dibujando 
-    ctx.stroke(); // Render the path
     dibujando = false;
   });
 
@@ -138,8 +139,8 @@ const firma = (canvas) => {
 
 
 
-const borrarFirma=(canvas)=>{
-  const ctx = canvasFirma.getContext("2d");
+const borrarFirma = (canvas) => {
+  const ctx = canvas.getContext("2d");
   ctx.reset();
   //Reestablecemos las características de la línea
   característicasDeLaLínea(ctx);
@@ -149,7 +150,7 @@ const borrarFirma=(canvas)=>{
 
 
 
-export {firma, borrarFirma};
+export { firma, borrarFirma };
 
 
 

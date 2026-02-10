@@ -22,7 +22,7 @@ Añade un par de botones para gestionar el canvas:
 ```js
 // Botón para borrar la firma
 document.querySelector("#btnBorrar").addEventListener("click", e=>{
-  borrarFirma();
+  borrarFirma(canvasFirma);
 });
 
 
@@ -42,6 +42,7 @@ document.querySelector("#btnFirmar").addEventListener("click", e=>{
   datosEnBase64ParaEnviarAlServidor.textContent = datosBase64;
 
   // Se muestra la imagen que se crea con los datos que devolvería el servidor
+  const imagenRecuperadaDelServidor = document.querySelector("#imagenRecuperadaDelServidor"); //etiqueta <img>
   imagenRecuperadaDelServidor.src = datosBase64;
 });
 ```
